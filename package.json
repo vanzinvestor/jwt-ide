@@ -1,0 +1,38 @@
+{
+  "name": "jwt-ide",
+  "version": "1.0.0",
+  "description": "JWT tokens with id any exprire, format look like id.expire.jwt",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "clean": "rimraf lib",
+    "compile": "tsc",
+    "dev": "tsc --watch",
+    "build": "npm run clean && npm run compile",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanzinvestor/jwt-ide"
+  },
+  "keywords": [
+    "jwt"
+  ],
+  "homepage": "https://github.com/vanzinvestor/jwt-ide",
+  "author": "Vanz Investor <vanzinvestor@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0",
+    "ms": "^2.1.3"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/ms": "^0.7.31",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.28.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
+  }
+}
