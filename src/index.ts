@@ -15,13 +15,13 @@ export function getTokenId(token: string) {
   return base64UrlDecode(id);
 }
 
-export function getTokenExpire(token: string) {
+export function getTokenExpiresIn(token: string) {
   const [, expire] = splitToken(token);
 
   const expireUtf8 = base64UrlDecode(expire);
 
   if (!isNumeric(expireUtf8)) {
-    throw new Error('Token expire is not numeric');
+    throw new Error('Token expires is not numeric');
   }
 
   return parseInt(expireUtf8);
@@ -30,7 +30,7 @@ export function getTokenExpire(token: string) {
 export function getJwtToken(token: string) {
   const [, , jwt] = splitToken(token);
 
-  return base64UrlDecode(jwt);
+  return jwt;
 }
 
 export function getToken(
@@ -44,7 +44,7 @@ export function getToken(
     throw new Error('Token expire is not numeric');
   }
 
-  return [base64UrlDecode(id), parseInt(expireUtf8), base64UrlDecode(jwt)];
+  return [base64UrlDecode(id), parseInt(expireUtf8), jwt];
 }
 
 export type JwtPayload = {
@@ -90,7 +90,19 @@ export function verify(
   }
 ) {
   try {
-    const [, , jwtToken] = splitToken(token);
+    const [, expire, jwtToken] = splitToken(token);
+
+    const expireUtf8 = base64UrlDecode(expire);
+
+    if (!isNumeric(expireUtf8)) {
+      throw new Error('Token expire is not numeric');
+    }
+
+    const expireNumber = parseInt(expireUtf8);
+
+    if (Date.now() > expireNumber) {
+      throw new Error('Token is expired');
+    }
 
     return jwt.verify(jwtToken, secretOrPublicKey, options);
   } catch (err: unknown) {
@@ -109,9 +121,9 @@ export function isExpire(token: string) {
 
   const expireNumber = parseInt(expireUtf8);
 
-  if (Date.now() > expireNumber) {
-    return true;
+  if (Date.now() < expireNumber) {
+    return false;
   }
 
-  return false;
+  return true;
 }
