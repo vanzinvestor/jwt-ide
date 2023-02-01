@@ -1,7 +1,7 @@
 import {
   getJwtToken,
   getToken,
-  getTokenExpiresIn,
+  getTokenExpire,
   getTokenId,
   isExpire,
   sign,
@@ -23,11 +23,11 @@ describe('Index tests', function () {
     assert.equal(getTokenId(correctToken), tokenId);
   });
   it('get correrct token expiresIn should return time in miliseconds', function () {
-    assert.equal(getTokenExpiresIn(correctToken), tokenExpiresIn);
+    assert.equal(getTokenExpire(correctToken), tokenExpiresIn);
   });
   it('get incorrerct token expiresIn should throw Error', function () {
     assert.throws(
-      () => getTokenExpiresIn(incorrectTokenExpiresIn),
+      () => getTokenExpire(incorrectTokenExpiresIn),
       /^Error: Token expires is not numeric$/
     );
   });
