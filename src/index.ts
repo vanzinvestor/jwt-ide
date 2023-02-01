@@ -15,7 +15,7 @@ export function getTokenId(token: string) {
   return base64UrlDecode(id);
 }
 
-export function getTokenExpiresIn(token: string) {
+export function getTokenExpire(token: string) {
   const [, expire] = splitToken(token);
 
   const expireUtf8 = base64UrlDecode(expire);
@@ -127,3 +127,13 @@ export function isExpire(token: string) {
 
   return true;
 }
+
+export default {
+  getTokenId,
+  getTokenExpire,
+  getJwtToken,
+  getToken,
+  sign,
+  verify,
+  isExpire,
+};
