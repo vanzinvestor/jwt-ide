@@ -5,14 +5,13 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "clean": "rimraf lib",
-    "compile": "tsc",
     "dev": "tsc --watch",
+    "compile": "tsc",
+    "clean": "rimraf lib",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
     "test:coverage": "nyc npm run test",
     "build": "npm run clean && npm run compile",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run test:coverage && npm run build"
   },
   "repository": {
     "type": "git",
